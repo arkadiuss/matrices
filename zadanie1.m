@@ -10,7 +10,7 @@ function[result] = mul_ijk(A,B)
   for i = 1:rows(A)
     for j = 1:columns(B)
       for k = 1:columns(A)
-        result(i,j) += A(i,k) + B(k,j);
+        result(i,j) += A(i,k) * B(k,j);
       endfor
     endfor
   endfor
@@ -21,7 +21,7 @@ function[result] = mul_ikj(A,B)
   for i = 1:rows(A)
     for k = 1:columns(A)
       for j = 1:columns(B)
-        result(i,j) += A(i,k) + B(k,j);
+        result(i,j) += A(i,k) * B(k,j);
       endfor
     endfor
   endfor
@@ -32,7 +32,7 @@ function[result] = mul_jik(A,B)
   for j = 1:columns(B)
     for i = 1:rows(A)
       for k = 1:columns(A)
-        result(i,j) += A(i,k) + B(k,j);
+        result(i,j) += A(i,k) * B(k,j);
       endfor
     endfor
   endfor
@@ -43,7 +43,7 @@ function[result] = mul_jki(A,B)
   for j = 1:columns(B)
     for k = 1:columns(A)
       for i = 1:rows(A)
-        result(i,j) += A(i,k) + B(k,j);
+        result(i,j) += A(i,k) * B(k,j);
       endfor
     endfor
   endfor
@@ -54,7 +54,7 @@ function[result] = mul_kij(A,B)
   for k = 1:columns(A)
     for i = 1:rows(A)
       for j = 1:columns(B)
-        result(i,j) += A(i,k) + B(k,j);
+        result(i,j) += A(i,k) * B(k,j);
       endfor
     endfor
   endfor
@@ -65,7 +65,7 @@ function[result] = mul_kji(A,B)
   for k = 1:columns(A)
     for j = 1:columns(B)
       for i = 1:rows(A)
-        result(i,j) += A(i,k) + B(k,j);
+        result(i,j) += A(i,k) * B(k,j);
       endfor
     endfor
   endfor
@@ -79,8 +79,8 @@ Yjki = [];
 Ykij = [];
 Ykji = [];
 for x = X
-  A = ones(x,x);
-  B = ones(x,x);
+  A = rand(x,x);
+  B = rand(x,x);
   [Yijk(end + 1), res] = time_measure(@() mul_ijk(A,B));
   [Yikj(end + 1), res] = time_measure(@() mul_ikj(A,B));
   [Yjik(end + 1), res] = time_measure(@() mul_jik(A,B));
