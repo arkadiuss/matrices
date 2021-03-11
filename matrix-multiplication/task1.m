@@ -71,9 +71,6 @@ function[result] = mul_kji(A,B)
   endfor
 endfunction
 
-function[result] = mul_nor(A,B)
-  result = A*B;
-endfunction
 
 X = [ 10, 30, 100 ];
 Yijk = [];
@@ -92,7 +89,6 @@ for x = X
   [Yjki(end + 1), res] = time_measure(@() mul_jki(A,B));
   [Ykij(end + 1), res] = time_measure(@() mul_kij(A,B));
   [Ykji(end + 1), res] = time_measure(@() mul_kji(A,B));
-  [Ynor(end + 1), res] = time_measure(@() mul_nor(A,B));
 endfor
 
-plot(X, Yijk, ";ijk;", X, Yikj, ";ikj;", X, Yjik, ";jik;",  X, Yjki, ";jki;",  X, Ykij, ";kij;", X, Ykji, ";kji;",X, Ynor, ";@;");
+plot(X, Yijk, ";ijk;", X, Yikj, ";ikj;", X, Yjik, ";jik;",  X, Yjki, ";jki;",  X, Ykij, ";kij;", X, Ykji, ";kji;");
