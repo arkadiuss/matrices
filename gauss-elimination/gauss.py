@@ -77,6 +77,7 @@ def lu_without_pivoting(A):
     U = M
     return L, U
 
+
 def backward_L(M):
     X = np.zeros((M.shape[0],))
     for i in range(0,M.shape[0]):
@@ -92,6 +93,7 @@ def solve_LU(L, U, b):
     c = backward_L(M)
     M = prepare(U, c)
     return backward(M)
+
 
 if __name__ == "__main__":
     A = np.random.rand(3, 3) # np.array([[4,5,6], [3,6,5], [3,3,3]])#
@@ -112,9 +114,10 @@ if __name__ == "__main__":
     print(L)
     print("U matrix")
     print(U)
-    print("A , L@U")
-    print(A, L @ U)
+    print("A")
+    print(A)
+    print("L@U")
+    print(L @ U)
     print("LU solution")
     x = solve_LU(L, U, b)
     print(x, A @ x, b)
-    
