@@ -63,35 +63,58 @@ def gauss_with_pivoting(A, b):
     return backward(M)
 
 
-def lu_without_pivoting(A, b):
-    M = prepare(A, b)
+def lu_without_pivoting(A):
     L = np.zeros(A.shape)
+    M = np.zeros(A.shape)
     for i in range(A.shape[0]):
         L[i, i] = 1
-
+    M[:,:] = A[:,:]
     for i in range(M.shape[0]):
         for j in range(i + 1, M.shape[0]):
             L[j, i] = M[j, i] / M[i, i]
             M[j] = M[j] - M[i] * M[j][i] / M[i][i]
     print(M)
-    return backward(M), L
+    U = M
+    return L, U
 
+def backward_L(M):
+    X = np.zeros((M.shape[0],))
+    for i in range(0,M.shape[0]):
+        s = 0
+        for j in range(0, i):
+            s = s + X[j] * M[i][j]
+        X[i] = (M[i, -1] - s) / M[i, i]
+    return X
+
+
+def solve_LU(L, U, b):
+    M = prepare(L, b)
+    c = backward_L(M)
+    M = prepare(U, c)
+    return backward(M)
 
 if __name__ == "__main__":
-    A = np.random.rand(3, 3)
+    A = np.random.rand(3, 3) # np.array([[4,5,6], [3,6,5], [3,3,3]])#
     b = np.array([1, 2, 3])
     print(A, b)
-    print("First")
+    print("With ones")
     x = gauss_with1(A, b)
     print(x, A @ x, b)
-    print("Second")
+    print("\n\nWithout ones")
     x = gauss_without1(A, b)
     print(x, A @ x, b)
-    print("Gauss with pivoting")
+    print("\n\nGauss with pivoting")
     x = gauss_with_pivoting(A, b)
     print(x, A @ x, b)
-    print("LU without pivoting")
-    x, L = lu_without_pivoting(A, b)
-    print(x, A @ x, b)
+    print("\n\nLU without pivoting")
+    L, U = lu_without_pivoting(A)
     print("L matrix")
     print(L)
+    print("U matrix")
+    print(U)
+    print("A , L@U")
+    print(A, L @ U)
+    print("LU solution")
+    x = solve_LU(L, U, b)
+    print(x, A @ x, b)
+    
