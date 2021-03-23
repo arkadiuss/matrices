@@ -41,16 +41,16 @@ def inv(A):
     return 1.0 / det(A) * adj(A)
 
 
-def matrix_p_norm(A, p=1):
-    return np.max(np.sum(np.abs(A) ** p, axis=0) ** (1/p))
+def matrix_norm_1(A):
+    return np.max(np.sum(np.abs(A), axis=0))
 
 
 def matrix_norm_inf(A):
     return np.max(np.sum(np.abs(A), axis=1))
 
 
-def cond(A, p=1):
-    return matrix_p_norm(A, p) * matrix_p_norm(inv(A), p)
+def cond_1(A):
+    return matrix_norm_1(A) * matrix_norm_1(inv(A))
 
 
 def cond_mag(A, k=10000000, p=1):
@@ -70,6 +70,6 @@ if __name__ == '__main__':
     # A = np.array([[2, 2, 3], [4, 5, 6], [7, 8, 9]])
     # A = np.array([[999, 998], [1000, 999]])
     print("Correct value:")
-    print(cond(A))
+    print(cond_1(A))
     print("Estimated value:")
     print(cond_mag(A))
