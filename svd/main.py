@@ -16,21 +16,21 @@ def power_method(A, eps):
 
 def custom_svd(A, eps=0.01):
     values = []
-    matrix = A
+    matrix = A.copy()
     for i in range(A.shape[0]):
         
         if i != 0:
-            u,s,v = values[-1]
-            tmp = np.outer(u, v)
-            matrix -= s * tmp
+            u, s, v = values[-1]
+            matrix -= s * np.outer(u, v)
 
         u = power_method(matrix, eps)
         v_unormalized = A.T @ u
         s = norm(v_unormalized)
         v = v_unormalized / s
         values.append((u, s, v))
+
     u, s, v = [np.array(x) for x in zip(*values)]
-    return u.T, s, v
+    return u.T, s, v.T
 
 
 if __name__ == '__main__':
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     u, s, v = custom_svd(A, 0.01)
     np.set_printoptions(suppress=True, precision=3)
 
-    print(u @ np.diag(s) @ v)
+    print(u @ np.diag(s) @ v.T)
 
     print("\nLeft Singular Vectors:")
     print(u)
