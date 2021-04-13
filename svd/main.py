@@ -14,11 +14,13 @@ def power_method(A, eps):
             return vec
 
 
-def custom_svd(A, eps=0.1):
+def custom_svd(A, eps=0.01):
     values = []
+    matrix = A
     for i in range(A.shape[0]):
-        matrix = A.copy()
-        for u, s, v in values[:i]:
+        
+        if i != 0:
+            u,s,v = values[-1]
             tmp = np.outer(u, v)
             matrix -= s * tmp
 
